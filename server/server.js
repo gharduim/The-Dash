@@ -1,38 +1,51 @@
-const express = require('express');
+const express = require("express"); // import express
 const { ApolloServer } = require('apollo-server-express');
-const path = require('path');
+const path = require("path"); // import path (to access file and directory paths)
 require('dotenv').config()
 
 const { typeDefs, resolvers } = require('./schemas');
-const {authMiddleware} = require('./utils/auth');
+const { authMiddleware } = require("./utils/auth");
 const db = require('./config/connection');
 
-const PORT = process.env.PORT || 3001;
-const app = express();
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  // These two lines below enable the playground when deployed to heroku. You can remove them if you don't want this functionality
-  introspection: true,
-  playground: true,
-  context: authMiddleware
-});
+const PORT = process.env.PORT || 3001; 
+const app = express(); 
 
-server.applyMiddleware({ app });
+let server;
 
-app.use(express.urlencoded({ extended: false }));
+async function startServer() {
+  server = new ApolloServer({
+      typeDefs,
+      resolvers,
+  });
+  await server.start();
+  server.applyMiddleware({ app });
+}
+startServer();
+
+// const server = new ApolloServer({
+//   typeDefs,
+//   resolvers,
+//   // These two lines below enable the playground when deployed to heroku. You can remove them if you don't want this functionality
+//   introspection: true,
+//   playground: true,
+//   context: authMiddleware
+// });
+// await server.start();
+// server.applyMiddleware({ app });
+
+app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
 }
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-db.once('open', () => {
+db.once("open", () => {
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);

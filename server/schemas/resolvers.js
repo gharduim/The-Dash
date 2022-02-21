@@ -1,28 +1,58 @@
+// // imports
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Thought } = require('../models');
 const { signToken } = require('../utils/auth');
+const { User, Case } = require('../models');
 
 const resolvers = {
   Query: {
+    me: async(parent, args, context) => {
+      if(context.user){
+        const userData = await User.findOne({ _id: context.user._id })
+          .select('-__v -password')
+          .populate('cases')
+          .populate('friends');
+        
+        return userData;
+      }
+      throw new AuthenticationError('Not logged in');
+        
+    },
+    // get all cases
+    cases: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Case.find(params).sort({ createdAt: -1 });
+    },
+    // get one case by ID
+    case: async (parent, { _id }) => {
+      return Case.findOne({ _id });
+    },
+    // get all users
     users: async () => {
-      return User.find().populate('thoughts');
+      return User.find()
+        .select('-__v -password')
+        .populate('friends')
+        .populate('cases');
     },
+    // get a user by username
     user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('thoughts');
-    },
+      return User.findOne({ username })
+        .select('-__v -password')
+        .populate('friends')
+        .populate('cases');
+    }
   },
-
   Mutation: {
-    addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
       const token = signToken(user);
+
       return { token, user };
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('No user found with this email address');
+        throw new AuthenticationError('Incorrect credentials');
       }
 
       const correctPw = await user.isCorrectPassword(password);
@@ -32,10 +62,51 @@ const resolvers = {
       }
 
       const token = signToken(user);
-
       return { token, user };
     },
-  },
+    addCase: async (parent, args, context) => {
+      if (context.user) {
+        const coldCase = await Case.create({ ...args, username: context.user.username });
+
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { cases: coldCase._id } },
+          { new: true }
+        );
+
+        return coldCase;
+      }
+    
+    throw new AuthenticationError('You need to be logged in');
+    },
+    addComment: async (parent, { caseId, commentText }, context) => {
+      if (context.user) {
+        const updatedCase = await Case.findOneAndUpdate(
+          { _id: caseId },
+          { $push: { comments: { commentText, username: context.user.username } } },
+          { new: true, runValidators: true }
+        );
+
+        return updatedCase;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    addFriend: async (parent, { friendId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { friends: friendId } },
+          { new: true }
+        ).populate('friends');
+
+        return updatedUser;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
+    }
+  }
 };
 
+// // exports
 module.exports = resolvers;
