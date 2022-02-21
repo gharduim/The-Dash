@@ -19,7 +19,7 @@ const CommentForm = ({ caseId }) => {
 
     try {
       await addComment({
-        variables: {commentText, caseId}
+        variables: { commentText, caseId }
       });
       setCommentText('');
       setCharacterCount(0);
@@ -38,21 +38,21 @@ const CommentForm = ({ caseId }) => {
       </p>
       <form onSubmit={handleFormSubmit}>
         <div className="form-floating mb-3">
-        <textarea
-          className="form-control"
-          placeholder="commentText"
-          value={commentText}
-          name="commentText"
-          id="commentText"
-          onChange={handleChange}>
-        </textarea>
-        <label for="commentText">Leave a Comment</label>
+          <textarea
+            className="form-control"
+            placeholder="commentText"
+            value={commentText}
+            name="commentText"
+            id="commentText"
+            onChange={handleChange}>
+          </textarea>
+          <label htmlFor="commentText">Leave a Comment</label>
         </div>
         <div className="d-grid ga-2 d-md-flex justify-content-md-end pt-3">
-                <button className='btn btn-dark btn-primary px-4' type='submit'>
-                  Submit
-                </button>
-              </div>
+          <button className='btn btn-dark btn-primary px-4' type='submit'>
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   )

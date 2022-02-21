@@ -11,11 +11,11 @@ const CommentList = ({ comments, title }) => {
       {comments &&
         comments.map(comments => (
           <div key={comments._id} className="card m-3">
-            <div class="card-body">
+            <div className="card-body">
               <p className="card-title">
                 <strong>{comments.username}</strong> - <span className="fs-6 text-muted">{comments.createdAt}</span>
               </p>
-              <p class="card-text">
+              <p className="card-text">
                 {comments.commentText}
               </p>
             </div>

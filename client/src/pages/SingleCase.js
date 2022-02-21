@@ -20,7 +20,7 @@ const SingleCase = (props) => {
   }
   return (
     <div>
-      <div class="m-2">
+      <div className="m-2">
         <h2 className="english-font text-center">{cases.caseTitle}</h2>
         <div className="text-center">
           {/* <p>Case Start Date: <span><strong>{cases.caseStartDate}</strong></span></p> */}

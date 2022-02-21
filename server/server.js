@@ -17,6 +17,7 @@ async function startServer() {
   server = new ApolloServer({
       typeDefs,
       resolvers,
+      context: authMiddleware
   });
   await server.start();
   server.applyMiddleware({ app });

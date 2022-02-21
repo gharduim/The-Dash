@@ -19,10 +19,6 @@ const CaseList = ({ cases }) => {
                 {cases.caseTitle}
               </Link></h3>
               <p className="fs-6"><strong>{cases.createdAt}</strong> by <strong>{cases.username}</strong></p>
-              <div className="py-2">
-                {/* <div>Case Status: <strong>{cases.caseStatus}</strong></div> */}
-                {/* <div>Case Start Date: <strong>{cases.caseStartDate}</strong></div> */}
-              </div>
               <div>
                 <p className="case-summary">Summary: {cases.caseSummary}</p>
                 <p></p>

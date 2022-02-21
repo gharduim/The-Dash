@@ -55,9 +55,9 @@ const Login = (props) => {
                 value={formState.email}
                 onChange={handleChange}
               />
-              <label for="email" class="form-label">Email: </label>
+              <label htmlFor="email" className="form-label">Email: </label>
               </div>
-              <div class="form-floating mb-3">
+              <div className="form-floating mb-3">
               <input
                 className='form-control'
                 placeholder='******'
@@ -67,7 +67,7 @@ const Login = (props) => {
                 value={formState.password}
                 onChange={handleChange}
               />
-                            <label for="password" class="form-label">Password:</label>
+                            <label htmlFor="password" className="form-label">Password:</label>
               </div>
 
               <div className="d-grid ga-2 d-md-flex justify-content-end pt-3">

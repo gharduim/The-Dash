@@ -42,7 +42,7 @@ const CaseForm = () => {
         <div className="py-3">
             <h3>Enter the case information:</h3>
             <form onSubmit={handleFormSubmit}>
-                <div class="form-floating mb-3">
+                <div className="form-floating mb-3">
                     <input
                         className="form-control"
                         placeholder="Enter a case title"
@@ -52,7 +52,7 @@ const CaseForm = () => {
                         value={formState.caseTitle}
                         onChange={handleChange}
                     />
-                    <label for="caseTitle">Enter a case Title</label>
+                    <label htmlFor="caseTitle">Enter a case Title</label>
                 </div>
                 <div className="form-floating mb-3">
                     <textarea
@@ -64,7 +64,7 @@ const CaseForm = () => {
                         onChange={handleChange}
                     >
                     </textarea>
-                    <label for="caseSummary">Enter a case summary</label>
+                    <label htmlFor="caseSummary">Enter a case summary</label>
                 </div>
                 <div className="form-floating mb-3">
                     <textarea
@@ -76,7 +76,7 @@ const CaseForm = () => {
                         onChange={handleChange}
                     >
                     </textarea>
-                    <label for="caseDescription">Enter a case description</label>
+                    <label htmlFor="caseDescription">Enter a case description</label>
                 </div>
                 <div className="mb-3">
                     <select
