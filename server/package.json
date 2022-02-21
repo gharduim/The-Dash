@@ -6,6 +6,7 @@
     "apollo-server": "^3.6.3",
     "apollo-server-express": "^3.6.3",
     "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
     "express.js": "^1.0.0",
     "faker": "^5.2.0",
     "graphql": "^16.3.0",
