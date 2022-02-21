@@ -1,12 +1,13 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { QUERY_CASES } from "../utils/queries";
-// import CaseForm from '../components/CaseForm';
+import CaseForm from '../components/CaseForm';
 import Auth from '../utils/auth';
 
 import CaseList from "../components/CaseList";
 
-const Home = () => {
+// form to add cases to the database
+const CaseFormPage = () => {
 
   const { loading, data } = useQuery(QUERY_CASES);
   const cases = data?.cases || [];
@@ -15,6 +16,11 @@ const Home = () => {
   return (
     <main>
       <div>
+        {loggedIn && (
+          <div>
+            <CaseForm/>
+          </div>
+        )}
         <div>
           {loading ? (
             <div>Loading...</div>
@@ -27,4 +33,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default CaseFormPage;

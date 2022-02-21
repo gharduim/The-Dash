@@ -1,33 +1,18 @@
 import React from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
 
 const Footer = () => {
-  const location = useLocation();
-  const history = useHistory();
   return (
-    <footer className="w-100 mt-auto bg-secondary p-4">
-      <div className="container text-center mb-5">
-        {location.pathname !== '/' && (
-          <button
-            className="btn btn-dark mb-3"
-            onClick={() => history.goBack()}
-          >
-            &larr; Go Back
-          </button>
-        )}
-        <h4>
-          Made with{' '}
-          <span
-            className="emoji"
-            role="img"
-            aria-label="heart"
-            aria-hidden="false"
-          >
-            ❤️
-          </span>{' '}
-          by Author.
-        </h4>
+    <footer className="bg-dark p-3 footer text-center d-flex justify-content-between">
+      <div className="">
+        <p className="px-2 text-light">MADE BY GUS</p>
       </div>
+      <div className="fa-lg text-light list-inline-item">
+        <a href="https://github.com/gharduim/The-Dash"><i className="fab fa-github px-2"></i></a>
+        <a href="https://www.linkedin.com/in/gustavo-harduim/"><i className="fab fa-linkedin px-2"></i></a>
+        <a href="#"><i className="fab fa-facebook px-2"></i></a>
+      </div>
+      
+
     </footer>
   );
 };
