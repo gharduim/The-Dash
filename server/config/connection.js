@@ -1,4 +1,6 @@
 const mongoose = require('mongoose'); // import mongoose
+require('dotenv').config()
+
 
 // create connection to database
 mongoose.connect(
